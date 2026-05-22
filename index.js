@@ -4,7 +4,7 @@ import {
     SlashCommandBuilder,
     AttachmentBuilder
 } from "discord.js";
-
+import express from "express";
 import dotenv from "dotenv";
 import GIFEncoder from "gifencoder";
 import { createCanvas, loadImage } from "canvas";
@@ -112,6 +112,18 @@ client.on("interactionCreate", async interaction => {
 
         await interaction.editReply("GIF生成失敗");
     }
+});
+
+const app = express();
+
+const PORT = process.env.PORT || 8000;
+
+app.get("/", (req, res) => {
+    res.send("Bot is alive!");
+});
+
+app.listen(PORT, () => {
+    console.log(`HTTP Server running on port ${PORT}`);
 });
 
 client.login(process.env.TOKEN);
